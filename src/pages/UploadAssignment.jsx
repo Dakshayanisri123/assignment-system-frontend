@@ -28,13 +28,16 @@ function UploadAssignment() {
     }
 
     try {
-      const res = await fetch("http://localhost:8080/api/assignments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title, course, deadline }),
-      });
+      const res = await fetch(
+        "https://assignment-system-backend.onrender.com/api/assignments",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title, course, deadline }),
+        }
+      );
 
       if (!res.ok) {
         throw new Error("Upload failed");

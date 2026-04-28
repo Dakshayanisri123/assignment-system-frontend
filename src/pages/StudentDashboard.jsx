@@ -13,13 +13,13 @@ function StudentDashboard() {
 
   // ================= FETCH =================
   const fetchSubmissions = () => {
-    fetch(`http://localhost:8080/api/submissions/student/${user.email}`)
+    fetch(`https://assignment-system-backend.onrender.com/api/submissions/student/${user.email}`)
       .then(res => res.json())
       .then(data => setSubmissions(data));
   };
 
   const fetchAssignments = () => {
-    fetch("http://localhost:8080/api/assignments")
+    fetch("https://assignment-system-backend.onrender.com/api/assignments")
       .then(res => res.json())
       .then(data => setAssignments(data));
   };
@@ -38,7 +38,7 @@ function StudentDashboard() {
     formData.append("assignmentTitle", assignments[index].title);
     formData.append("course", assignments[index].course);
 
-    const res = await fetch("http://localhost:8080/api/submissions/upload", {
+    const res = await fetch("https://assignment-system-backend.onrender.com/api/submissions/upload", {
       method: "POST",
       body: formData,
     });
@@ -85,9 +85,7 @@ function StudentDashboard() {
 
       {assignments.map((a, i) => {
         const sub = submissions.find(
-          s =>
-            s.assignmentTitle.toLowerCase() ===
-            a.title.toLowerCase()
+          s => s.assignmentTitle.toLowerCase() === a.title.toLowerCase()
         );
 
         return (
@@ -107,7 +105,7 @@ function StudentDashboard() {
               <>
                 <p>📎 {sub.fileName}</p>
                 <a
-                  href={`http://localhost:8080/api/submissions/file/${sub.fileName}`}
+                  href={`https://assignment-system-backend.onrender.com/api/submissions/file/${sub.fileName}`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -119,9 +117,7 @@ function StudentDashboard() {
             {!sub && (
               <input
                 type="file"
-                onChange={(e) =>
-                  handleFileChange(i, e.target.files[0])
-                }
+                onChange={(e) => handleFileChange(i, e.target.files[0])}
               />
             )}
           </div>
@@ -130,7 +126,7 @@ function StudentDashboard() {
     </>
   );
 
-  // ================= TASKS (FIXED CLEAN VERSION) =================
+  // ================= TASKS =================
   const renderTasks = () => (
     <>
       <h2>Tasks</h2>

@@ -6,13 +6,12 @@ import "../dashboard.css";
 function TeacherDashboard() {
   const navigate = useNavigate();
 
-  // ✅ FIXED: moved inside component
   const [page, setPage] = useState("dashboard");
   const [submissions, setSubmissions] = useState([]);
 
   // 🔥 FETCH DATA
   const fetchSubmissions = () => {
-    fetch("http://localhost:8080/api/submissions")
+    fetch("https://assignment-system-backend.onrender.com/api/submissions")
       .then(res => res.json())
       .then(data => setSubmissions(data));
   };
@@ -21,19 +20,19 @@ function TeacherDashboard() {
     fetchSubmissions();
   }, []);
 
-  // 🔥 SAVE MARKS
+  // 🔥 SAVE MARKS (FIXED HERE ✅)
   const handleSave = async (id) => {
     const marks = document.getElementById(`marks-${id}`).value;
     const feedback = document.getElementById(`feedback-${id}`).value;
 
-    await fetch(`http://localhost:8080/api/submissions/${id}`, {
+    await fetch(`https://assignment-system-backend.onrender.com/api/submissions/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ marks, feedback }),
     });
 
     alert("Graded!");
-    fetchSubmissions(); // refresh
+    fetchSubmissions();
   };
 
   return (
@@ -74,7 +73,7 @@ function TeacherDashboard() {
                 <tr>
                   <th>Student</th>
                   <th>Assignment</th>
-                  <th>File</th> {/* ✅ NEW */}
+                  <th>File</th>
                   <th>Marks</th>
                   <th>Feedback</th>
                   <th>Action</th>
@@ -87,11 +86,11 @@ function TeacherDashboard() {
                     <td>{s.studentName}</td>
                     <td>{s.assignmentTitle}</td>
 
-                    {/* ✅ PDF VIEW */}
+                    {/* 🔥 FILE VIEW (FIXED HERE ✅) */}
                     <td>
                       {s.fileName ? (
                         <a
-                          href={`http://localhost:8080/api/submissions/file/${s.fileName}`}
+                          href={`https://assignment-system-backend.onrender.com/api/submissions/file/${s.fileName}`}
                           target="_blank"
                           rel="noreferrer"
                         >
